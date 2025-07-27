@@ -1,0 +1,7 @@
+spring:
+    application:
+        name: test
+    kafka:
+        bootstrap-servers: 172.18.0.2
+        consumer:
+            group-id: 1
