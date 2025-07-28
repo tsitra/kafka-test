@@ -1,22 +1,14 @@
-FROM alpine:latest AS base
+FROM alpine:latest
 
-RUN <<EOT
-export DEBIAN_FRONTEND="noninteractive" && \
-apk add maven openjdk21 && \
-mkdir -p /app/src && \
-mvn -v
-EOT
+RUN mkdir -p /app/src
 WORKDIR /app
-
-FROM base AS builder
+RUN export DEBIAN_FRONTEND="noninteractive"
+RUN apk add openjdk21 curl
 COPY src /app/src
+COPY .mvn /app/.mvn
+COPY mvnw* /app/
 COPY pom.xml /app/pom.xml
+RUN /app/mvnw clean package -DskipTests=true
+RUN cp /app/target/*.jar /app/app.jar
 
-RUN <<EOT
-mvn -v
-mvn clean package -DskipTests=true
-EOT
-
-FROM base AS runner
-COPY --from=builder /app/target/*.jar /app/app.jar
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
