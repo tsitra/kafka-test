@@ -1,7 +1,11 @@
-package dev.nathanrbrown.kafka.test.kafka;
+package dev.nathanrbrown.kafka.test.kafka.controller;
 
+import dev.nathanrbrown.kafka.test.kafka.config.TopicConfig;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +21,9 @@ public class MyKafkaExample {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    @Autowired
+    private ConcurrentKafkaListenerContainerFactory<String, String> concurrentKafkaListenerContainerFactory;
+
     @GetMapping(PATH + "/")
     public String index(){
         return message;
@@ -29,8 +36,12 @@ public class MyKafkaExample {
     }
 
     @KafkaListener(topics = TopicConfig.TOPIC, groupId = "1")
-    public void listenGroupFoo(String message) {
-        System.out.println("Received Message in group 1: " + message);
+    public void kafkaTriggeredMessageChange(final String message) {
         this.message = message;
+    }
+
+    @PostConstruct
+    public void init(){
+        concurrentKafkaListenerContainerFactory.getConsumerFactory().createConsumer().
     }
 }

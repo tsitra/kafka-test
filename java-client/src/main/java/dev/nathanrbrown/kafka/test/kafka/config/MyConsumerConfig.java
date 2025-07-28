@@ -1,4 +1,4 @@
-package dev.nathanrbrown.kafka.test.kafka;
+package dev.nathanrbrown.kafka.test.kafka.config;
 
 import java.util.HashMap;
 import java.util.Map;

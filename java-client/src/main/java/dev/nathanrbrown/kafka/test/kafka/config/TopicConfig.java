@@ -1,4 +1,4 @@
-package dev.nathanrbrown.kafka.test.kafka;
+package dev.nathanrbrown.kafka.test.kafka.config;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.springframework.beans.factory.annotation.Value;

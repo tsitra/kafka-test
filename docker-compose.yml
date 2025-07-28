@@ -31,10 +31,10 @@ services:
     ports:
     - "9092:9092"
     restart: on-failure
-  java-consumer:
-    hostname: java-consumer
+  java-client:
+    hostname: java-client
     build:
-      context: ./listener
+      context: ./java-client
       dockerfile: localdev.dockerfile
     environment:
       - KAFKA_ENDPOINT=kafka-broker:9092
