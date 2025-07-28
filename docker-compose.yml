@@ -29,7 +29,7 @@ services:
     depends_on:
       - zookeeper
     ports:
-    - 9092:9092
+    - "9092:9092"
     restart: on-failure
   java-consumer:
     hostname: java-consumer
@@ -43,3 +43,5 @@ services:
       - kafka-broker
     depends_on:
       - kafka-broker
+    ports:
+      - "8080:8080"
